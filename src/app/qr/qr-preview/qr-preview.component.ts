@@ -8,7 +8,7 @@ import QRCodeStyling from 'qr-code-styling';
 })
 export class QrPreviewComponent {
 
-  @Input() item = ""; //
+  @Input() item = ""; 
   @Input() id ="";
 
   constructor(
@@ -17,14 +17,21 @@ export class QrPreviewComponent {
   qr: QRCodeStyling |null = null;
 
   ngOnInit(): void {
-    //this.item.width = 200
-    //this.item.height = 200
-    var options = JSON.parse(atob(this.item))
-    options.height = 200
-    options.width = 200
-    this.qr = new QRCodeStyling(options)
-    var canvas = <HTMLElement> document.getElementById("canvas"+this.id)
-    canvas.innerHTML=""
-    this.qr.append(canvas)
+    setTimeout(()=>{
+      var options = JSON.parse(atob(this.item))
+      options.height = 200
+      options.width = 200
+      this.qr = new QRCodeStyling(options)
+      var canvas = <HTMLElement> document.getElementById(this.id)
+      canvas.innerHTML = ""
+      console.log(canvas,this.id)
+      console.log(this.id)
+      this.qr.append(canvas)
+    },0) //magic!
+    
+  }
+
+  ngOnDestroy():void{
+    this.id = ""
   }
 }

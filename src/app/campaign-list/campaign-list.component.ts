@@ -35,19 +35,28 @@ export class CampaignListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadCampaigns()
+    this.searchStringObservable.pipe(
+      debounceTime(300), 
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.searchString = value;
+        this.loadCampaigns()
+      });
+    }
+
+  
+  loadCampaigns(): void{
     this.campaignService.getCampaignList("",this.searchString)
     .subscribe(data => {
       this.campaignList = data.results;
       this.nextPage = data.next;
       this.previousPage = data.previous
       this.processedCampaignList = Object.assign([],this.campaignList)
+      console.log(this.processedCampaignList)
     },
     error => console.log(error) )
-    this.searchStringObservable.pipe(
-      debounceTime(300), 
-      distinctUntilChanged())
-      .subscribe(value => {this.searchString = value;this.filterDataview()});
-    }
+  }
 
   search(text: string):void {
     this.searchStringObservable.next(text); 

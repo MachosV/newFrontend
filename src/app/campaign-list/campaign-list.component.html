@@ -12,7 +12,7 @@
             <ng-template ngFor let-campaign [ngForOf]="processedCampaignList">
                 <div class="card mb-2 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-1">
                     <div class="card-img-top text-center">
-                        <div id="canvas{{campaign.id}}"></div>
+                        <div id="{{campaign.id}}"></div>
                         <app-qr-preview [id]="campaign.id" [item] = "campaign.options"></app-qr-preview>
                         <!--<qr-code id="canvas" value="http://192.168.1.4:8000/{{campaign.representationLink}}" size="200"
                             errorCorrectionLevel="M"></qr-code>-->
@@ -41,6 +41,7 @@
         </div>
     </div>
 </div>
+
 <ng-template #elseBlock>
     <p-progressBar mode="indeterminate"></p-progressBar>
 </ng-template>

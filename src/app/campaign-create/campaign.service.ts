@@ -57,7 +57,7 @@ export class CampaignService {
       tempCampaignURL = tempCampaignURL+page.split("/campaign")[1]
     }
     if(search){
-      params = params.append('search', search);
+      params = params.append('s', search);
     }
     return this.http.get<CampaignPage>(tempCampaignURL,{params:params})
   }
