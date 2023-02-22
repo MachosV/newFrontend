@@ -16,7 +16,8 @@ import { HttpClient } from '@angular/common/http';
 
 export class QreditorComponent {
   constructor(
-    private qrOptionService: QroptionsService,   
+    private qrOptionService: QroptionsService,
+    private http: HttpClient,   
   ) {}
 
   redirectionServiceURL: string ="http://192.168.1.4:8000/"
@@ -165,19 +166,19 @@ export class QreditorComponent {
   }
 
   onQRImageUploaded(event: any){
-    /*const file = event.target.files[0];
+    const file = event.target.files[0];
     const fd = new FormData();
     fd.append('image', file, file.name);
     this.http.post('api/images', fd).subscribe(res => {
       console.log(res);
-    });*/
-    this.qrObject.options.image = "event.target.files[0].name"
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.qrObject.options.image = e.target.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-    this.onQrChange()
+    });
+    // this.qrObject.options.image = "event.target.files[0].name"
+    // const reader = new FileReader();
+    // reader.onload = (e: any) => {
+    //   this.qrObject.options.image = e.target.result;
+    // };
+    // reader.readAsDataURL(event.target.files[0]);
+    // this.onQrChange()
   }
 
   downloadQR(){
