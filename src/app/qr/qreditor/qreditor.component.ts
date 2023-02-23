@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 import { MD5 } from 'crypto-js';
 import QRCodeStyling from 'qr-code-styling';
 import { HttpClient } from '@angular/common/http';
+import { MessagingService } from 'src/app/messages/messaging.service';
 
 @Component({
   selector: 'app-qreditor',
@@ -17,11 +18,12 @@ import { HttpClient } from '@angular/common/http';
 export class QreditorComponent {
   constructor(
     private qrOptionService: QroptionsService,
+    private messageService: MessagingService,
     private http: HttpClient,   
   ) {}
 
   redirectionServiceURL: string ="http://192.168.1.4:8000/"
-
+  private fd = new FormData()
   qrObject: any = {
     qrUUID:"",
     qrName:"",
@@ -166,19 +168,22 @@ export class QreditorComponent {
   }
 
   onQRImageUploaded(event: any){
-    const file = event.target.files[0];
-    const fd = new FormData();
-    fd.append('image', file, file.name);
-    this.http.post('api/images', fd).subscribe(res => {
-      console.log(res);
-    });
-    // this.qrObject.options.image = "event.target.files[0].name"
-    // const reader = new FileReader();
-    // reader.onload = (e: any) => {
-    //   this.qrObject.options.image = e.target.result;
-    // };
-    // reader.readAsDataURL(event.target.files[0]);
-    // this.onQrChange()
+    if (!event.target.files[0]){
+      this.fd.delete('image')
+      console.log("deleted image")
+      this.qrObject.options.image = ""
+    }else{
+      const file = event.target.files[0];
+      this.fd.append('image', file, file.name);
+  
+      this.qrObject.options.image = "event.target.files[0].name"
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.qrObject.options.image = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    this.onQrChange()
   }
 
   downloadQR(){
@@ -187,14 +192,37 @@ export class QreditorComponent {
   }
 
   createQR(){
-    this.qrOptionService.saveQR().subscribe(
-      data => {
-        this.qrObject.isSavedOnBackend = true
-      },
-      error => {
-        this.qrObject.isSavedOnBackend = false
-      }
-    )
+    var imageBacklink:any
+    if (this.fd.get('image') ){
+      this.http.post('api/images', this.fd).subscribe(res => {
+        var data:any = res
+        imageBacklink = data['file_url'];
+        this.qrObject.options.image = imageBacklink
+        this.qrOptionService.saveQR().subscribe(
+          data => {
+            this.qrObject.isSavedOnBackend = true
+            this.messageService.addMessage("QR Saved!","success")
+          },
+          error => {
+            this.qrObject.isSavedOnBackend = false
+            console.log(error)
+            this.messageService.addMessage(error,"error")
+          }
+        )
+      })
+    }else{
+      this.qrOptionService.saveQR().subscribe(
+        data => {
+          this.qrObject.isSavedOnBackend = true
+          this.messageService.addMessage("QR Saved!","success")
+        },
+        error => {
+          this.qrObject.isSavedOnBackend = false
+          console.log(error)
+          this.messageService.addMessage(error,"error")
+        }
+      )
+    }
   }
 
   showSingleURLForm(){

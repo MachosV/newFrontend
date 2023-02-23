@@ -53,7 +53,6 @@ export class CampaignListComponent implements OnInit {
       this.nextPage = data.next;
       this.previousPage = data.previous
       this.processedCampaignList = Object.assign([],this.campaignList)
-      console.log(this.processedCampaignList)
     },
     error => console.log(error) )
   }

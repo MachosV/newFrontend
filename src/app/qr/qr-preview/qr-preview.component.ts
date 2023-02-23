@@ -24,8 +24,6 @@ export class QrPreviewComponent {
       this.qr = new QRCodeStyling(options)
       var canvas = <HTMLElement> document.getElementById(this.id)
       canvas.innerHTML = ""
-      console.log(canvas,this.id)
-      console.log(this.id)
       this.qr.append(canvas)
     },0) //magic!
     
