@@ -6,6 +6,7 @@ import { MD5 } from 'crypto-js';
 import QRCodeStyling from 'qr-code-styling';
 import { HttpClient } from '@angular/common/http';
 import { MessagingService } from 'src/app/messages/messaging.service';
+import { ErrorHandlerService } from 'src/app/errorHandler/errorHandlerService';
 
 @Component({
   selector: 'app-qreditor',
@@ -19,7 +20,8 @@ export class QreditorComponent {
   constructor(
     private qrOptionService: QroptionsService,
     private messageService: MessagingService,
-    private http: HttpClient,   
+    private http: HttpClient,  
+    private errorHandler: ErrorHandlerService 
   ) {}
 
   redirectionServiceURL: string ="http://192.168.1.4:8000/"
@@ -218,7 +220,7 @@ export class QreditorComponent {
         },
         error => {
           this.qrObject.isSavedOnBackend = false
-          console.log(error)
+          this.errorHandler.handleError(error)
           this.messageService.addMessage(error,"error")
         }
       )

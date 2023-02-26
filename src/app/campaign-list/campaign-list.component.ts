@@ -6,6 +6,7 @@ import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { CampaignService } from '../campaign-create/campaign.service';
 import { Campaign } from '../campaign-create/campaignInterface';
+import { ErrorHandlerService } from '../errorHandler/errorHandlerService';
 
 @Component({
   selector: 'app-campaign-list',
@@ -25,7 +26,8 @@ export class CampaignListComponent implements OnInit {
   pageToLoad: string = "";
 
   constructor(
-    private campaignService: CampaignService
+    private campaignService: CampaignService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   filterDataview():void {
@@ -54,7 +56,7 @@ export class CampaignListComponent implements OnInit {
       this.previousPage = data.previous
       this.processedCampaignList = Object.assign([],this.campaignList)
     },
-    error => console.log(error) )
+    error => this.errorHandler.handleError(error) )
   }
 
   search(text: string):void {
