@@ -23,9 +23,10 @@ export class QrPreviewComponent {
       var options = JSON.parse(atob(this.item))
       options.height = 200
       options.width = 200
-      options.image = ""
       if (options.image.length > 0){
         options.image = this.configurationService.getBaseURL()+options.image
+      }else{
+        options.image = ""
       }
       this.qr = new QRCodeStyling(options)
       var canvas = <HTMLElement> document.getElementById(this.id)
