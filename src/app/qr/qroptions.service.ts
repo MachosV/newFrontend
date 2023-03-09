@@ -61,7 +61,7 @@ export class QroptionsService {
     var data = {
       name:this.qrObject.qrName,
       description:this.qrObject.qrDescription,
-      representationLink:this.qrObject.options.data.split("/")[3],
+      representationLink:this.qrObject.options.data.split("/")[4],
       links:this.qrObject.links,
       gtag:this.qrObject.qrAnalytics,
       options: btoa(JSON.stringify(this.qrObject.options))
