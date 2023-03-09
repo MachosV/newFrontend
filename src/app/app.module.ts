@@ -30,6 +30,7 @@ import { QrshowComponent } from './qr/qrshow/qrshow.component';
 import { QreditorComponent } from './qr/qreditor/qreditor.component';
 import { QrPreviewComponent } from './qr/qr-preview/qr-preview.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SettingsComponent } from './settings/settings.component';
     QreditorComponent,
     QrPreviewComponent,
     SettingsComponent,
+    NewUserComponent,
   ],
   imports: [
     ColorPickerModule,

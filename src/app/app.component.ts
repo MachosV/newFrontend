@@ -7,7 +7,7 @@ import { GatekeeperService } from './auth/gatekeeper.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'QRExp.io';
   isLoggedIn = false;
   gatekeeperService: GatekeeperService | any
   constructor(gatekeeperService: GatekeeperService){
@@ -15,6 +15,5 @@ export class AppComponent {
   }
   
   ngOnInit(){
-    this.isLoggedIn = this.gatekeeperService.isLoggedIn()
   }
 }

@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessagingService } from '../messages/messaging.service';
+import { ConfigurationService } from '../appConfiguration/config';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,12 @@ export class CampaignService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private messageService: MessagingService) { }
+    private messageService: MessagingService,
+    private configService: ConfigurationService,
+    ) { }
 
   postCampaign(campaign: Campaign){
-    this.http.post<Campaign>(this.createCampaignURL,campaign)
+    this.http.post<Campaign>(this.configService.getCreateCampaignURL(),campaign)
     .subscribe(
       _=>_,
       error => console.log("An error occured",error))
@@ -35,24 +38,23 @@ export class CampaignService {
       "description":campaign.description,
       "links": links
     }
-    this.http.put<Campaign>(this.campaignURL+"/"+campaign.id+"/update",object)
+    this.http.put<Campaign>(this.configService.getCampaignsURL()+"/"+campaign.id+"/update",object)
     .subscribe(
       _=>_,
       error => console.log("An error occured",error))
   }
 
   deleteCampaign(campaign: Campaign): void{
-    this.http.delete<Campaign>(this.campaignURL+"/"+campaign.id)
+    this.http.delete<Campaign>(this.configService.getCampaignsURL()+"/"+campaign.id)
     .subscribe(
       _=>{this.messageService.addMessage("QR Code Deleted","success")},
       error => console.log("An error occured",error))
   }
-
-
+  
   getCampaignList(page:string, search:string) :Observable<CampaignPage>{
 
     let params = new HttpParams();
-    var tempCampaignURL = this.campaignURL
+    var tempCampaignURL = this.configService.getCampaignsURL()
     if(page){
       tempCampaignURL = tempCampaignURL+page.split("/campaign")[1]
     }
@@ -63,7 +65,7 @@ export class CampaignService {
   }
 
   getCampaign(id: string): Observable<Campaign> {
-    return this.http.get<Campaign>(this.campaignURL+"/"+id)
+    return this.http.get<Campaign>(this.configService.getCampaignsURL()+"/"+id)
   }
 
   setRepresentationLink(representationLink: string){

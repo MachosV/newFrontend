@@ -5,11 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class ConfigurationService {
 
-    private baseURL = "http://localhost:8000/"
+    private baseURL = "http://68.183.6.57/"
 
     private loginURL = this.baseURL+""
     private redirectionServiceURL = this.baseURL+""
     private changePasswordURL = "api/auth/changePassword"
+    private campaignURL = "api/campaign"
+    private createCampaignURL = this.campaignURL+"create"
+    private redirectionURL = this.baseURL+"r/"
+    private newUserURL = this.baseURL+"newUser/"
 
 
     getBaseURL():string{
@@ -26,6 +30,22 @@ export class ConfigurationService {
 
     getChangePasswordURL(): string{
         return this.changePasswordURL
+    }
+
+    getCampaignsURL():string{
+        return this.campaignURL
+    }
+
+    getCreateCampaignURL():string{
+        return this.createCampaignURL
+    }
+
+    getNewUserURL():string{
+        return this.newUserURL
+    }
+
+    getRedirectionURL():string{
+        return this.redirectionURL
     }
 
   constructor() { }

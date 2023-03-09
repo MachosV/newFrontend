@@ -1,13 +1,8 @@
-<app-navbar></app-navbar>
-<div class="container-fluid"><h4>Settings</h4></div>
+<div class="container-fluid"><h4>Welcome new QRExp user!</h4></div>
 <div class="container-fluid row">
     <div class="container col-lg-4">
         <form class="mt-3">
-            <h5>Change password</h5>
-            <div class="mb-3">
-              <input [(ngModel)]="oldPassword" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="oldPassword" aria-describedby="oldpassword" placeholder="Old password">
-              <div class="form-text">Your old password</div>
-            </div>
+            <h5>Set your new password</h5>
             <div class="mb-3">
               <input [(ngModel)]="newPassword" (input)="passwordFieldChanged($event)" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="newPassword" placeholder="New password">
               <div class="form-text">Your new password</div>
@@ -16,7 +11,7 @@
                 <input [(ngModel)]="newPasswordConfirm" (input)="passwordFieldChanged($event)" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="newPasswordConfirm" placeholder="Confirm new password">
                 <div class="form-text">Passwords must match</div>
               </div>
-            <button [attr.disabled]="okToShowSubmitButton ? null : true" type="submit" (click)="changePassword()" class="btn btn-primary">Change password</button>
+            <button [attr.disabled]="okToShowSubmitButton ? null : true" type="submit" (click)="setPassword()" class="btn btn-primary">Set your new password</button>
             <h5 class="mt-3">Password requirements</h5>
             <p>
               Passwords must match 
@@ -41,5 +36,3 @@
           </form>
     </div>
 </div>
-<app-messages></app-messages>
-

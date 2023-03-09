@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import QRCodeStyling from 'qr-code-styling';
+import { ConfigurationService } from 'src/app/appConfiguration/config';
 
 @Component({
   selector: 'app-qr-preview',
@@ -12,6 +13,7 @@ export class QrPreviewComponent {
   @Input() id ="";
 
   constructor(
+    private configurationService: ConfigurationService,
     ){}
 
   qr: QRCodeStyling |null = null;
@@ -21,6 +23,7 @@ export class QrPreviewComponent {
       var options = JSON.parse(atob(this.item))
       options.height = 200
       options.width = 200
+      options.image = this.configurationService.getBaseURL()+options.image
       this.qr = new QRCodeStyling(options)
       var canvas = <HTMLElement> document.getElementById(this.id)
       canvas.innerHTML = ""
