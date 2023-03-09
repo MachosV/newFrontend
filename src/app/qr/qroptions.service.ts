@@ -63,7 +63,6 @@ export class QroptionsService {
       description:this.qrObject.qrDescription,
       representationLink:this.qrObject.options.data.split("/")[3],
       links:this.qrObject.links,
-      //image:this.qrObject. TBD
       gtag:this.qrObject.qrAnalytics,
       options: btoa(JSON.stringify(this.qrObject.options))
     }

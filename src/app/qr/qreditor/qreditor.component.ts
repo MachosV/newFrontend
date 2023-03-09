@@ -7,6 +7,7 @@ import QRCodeStyling from 'qr-code-styling';
 import { HttpClient } from '@angular/common/http';
 import { MessagingService } from 'src/app/messages/messaging.service';
 import { ErrorHandlerService } from 'src/app/errorHandler/errorHandlerService';
+import { ConfigurationService } from 'src/app/appConfiguration/config';
 
 @Component({
   selector: 'app-qreditor',
@@ -21,10 +22,11 @@ export class QreditorComponent {
     private qrOptionService: QroptionsService,
     private messageService: MessagingService,
     private http: HttpClient,  
-    private errorHandler: ErrorHandlerService 
+    private errorHandler: ErrorHandlerService,
+    private configurationService: ConfigurationService
   ) {}
 
-  redirectionServiceURL: string ="http://192.168.1.4:8000/"
+  redirectionServiceURL: string = this.configurationService.getBaseURL()
   private fd = new FormData()
   qrObject: any = {
     qrUUID:"",
