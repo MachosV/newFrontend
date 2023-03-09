@@ -12,7 +12,7 @@ export class ConfigurationService {
     private changePasswordURL = "api/auth/changePassword"
     private campaignURL = "api/campaign"
     private createCampaignURL = this.campaignURL+"create"
-    private redirectionURL = this.baseURL+"r/"
+    private redirectionURL = this.baseURL+"rservice/"
     private newUserURL = this.baseURL+"newUser/"
 
 

@@ -26,7 +26,7 @@ export class QreditorComponent {
     private configurationService: ConfigurationService
   ) {}
 
-  redirectionServiceURL: string = this.configurationService.getBaseURL()
+  redirectionServiceURL: string = this.configurationService.getRedirectionURL()
   private fd = new FormData()
   qrObject: any = {
     qrUUID:"",
