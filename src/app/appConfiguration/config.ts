@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ConfigurationService {
 
-    //private baseURL = "http://68.183.6.57/"
-    private baseURL = "http://qrexp.io/"
+    private baseURL = "http://68.183.6.57/"
+    //private baseURL = "http://qrexp.io/"
 
     private loginURL = this.baseURL+""
     private redirectionServiceURL = this.baseURL+""
