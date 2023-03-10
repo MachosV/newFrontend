@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { MessagingService } from 'src/app/messages/messaging.service';
 import { ErrorHandlerService } from 'src/app/errorHandler/errorHandlerService';
 import { ConfigurationService } from 'src/app/appConfiguration/config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-qreditor',
@@ -129,7 +130,7 @@ export class QreditorComponent {
   }
 
   onRepresentationLinkChange(){
-    if(this.qrObject.links[0].length > 0){
+    if(this.qrObject.links[0].length > 0 && this.isValidUrl(this.qrObject.links[0])){
       this.calculateQRData()
     }else{
       this.qrObject.options.data=""
@@ -141,6 +142,10 @@ export class QreditorComponent {
 
   addLink(): void{
     if (this.qrObject.tempLink.length < 1){
+      return
+    }
+    if (!this.isValidUrl(this.qrObject.tempLink)){
+      this.messageService.addMessage("This field requires a valid http/https link e.g http://qrexp.io","error")
       return
     }
     this.qrObject.links.push(this.qrObject.tempLink)
@@ -174,7 +179,6 @@ export class QreditorComponent {
   onQRImageUploaded(event: any){
     if (!event.target.files[0]){
       this.fd.delete('image')
-      console.log("deleted image")
       this.qrObject.options.image = ""
     }else{
       const file = event.target.files[0];
@@ -294,6 +298,15 @@ END:VCARD`
       this.onGradientBackgroundColorChange()
     }
     this.qrBackgroundColorToggle = value
+  }
+
+  isValidUrl(url: string): boolean {
+    try {
+      const parsedUrl = new URL(url);
+      return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
   }
 
 }

@@ -1,42 +1,58 @@
 <app-navbar></app-navbar>
 <div class="container" *ngIf="campaignList else elseBlock">
     <h4>My QR Codes</h4>
-    <div class="container justify-content-center mb-2">
-        <div class="input-group mb-2">
+    <div class="container text-center mb-2 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="input-group mb-3">
             <button class="btn btn-outline-secondary bg-white border-start-1 border-bottom-1 border-end-0 border"><a href="https://support.google.com/analytics/answer/9539598#find-G-ID"><span class="bi bi-search"></span></a></button>
             <input [(ngModel)]="searchString" (input)="search(searchString)" class="form-control border" id="trackingID" placeholder="Search">
         </div>
+    </div>
 
-        <div class="row">
-            <!--<ng-template ngFor let-campaign [ngForOf]="campaignList"> -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <ng-template ngFor let-campaign [ngForOf]="processedCampaignList">
+            <div class="col">
+                <div class="card">
+                    <div id="{{campaign.id}}" class="text-center pt-3 card-img-top" alt="..."></div>
+                  <app-qr-preview [id]="campaign.id" [item] = "campaign.options"></app-qr-preview>
+                  <div class="card-body">
+                    <h5 class="card-title">{{campaign.name}}</h5>
+                    <p class="card-text">{{campaign.description}}</p>
+                    <p class="card-text">
+                        Created: {{campaign.create_date | date}}
+                    </p>
+                    <a class="stretched-link" href="campaigns/{{campaign.id}}"></a>
+                  </div>
+                </div>
+              </div>
+
+        </ng-template>
+      </div>
+
+       <!-- <div class="row row-cols-12 row-cols-sm-12 row-cols-md-6 row-cols-lg-4 row-cols-xl-3 g-4">
             <ng-template ngFor let-campaign [ngForOf]="processedCampaignList">
-                <div class="card mb-2 col-sm-12 col-md-6 col-lg-6 col-xl-4 p-1">
-                    <div class="card-img-top text-center">
-                        <div id="{{campaign.id}}"></div>
-                        <app-qr-preview [id]="campaign.id" [item] = "campaign.options"></app-qr-preview>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-text">
-                            <p><b>{{campaign.name}}</b></p>
-                            <p>{{campaign.description}}</p>
-                            <a class="stretched-link" href="campaigns/{{campaign.id}}"></a>
+                    <div class="card  mt-3 pt-3">
+                        <div class="card-img-top text-center">
+                            <div id="{{campaign.id}}"></div>
+                            <app-qr-preview [id]="campaign.id" [item] = "campaign.options"></app-qr-preview>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p><b>{{campaign.name}}</b></p>
+                                <p>{{campaign.description}}</p>
+                                <a class="stretched-link" href="campaigns/{{campaign.id}}"></a>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-text container-fluid">
-                        <p>Created: {{campaign.create_date | date}}</p>
-                    </div>
-
-                </div>
             </ng-template>
-            <p>Showing <b>{{processedCampaignList.length}}</b> QR Codes</p>
-            <div *ngIf="nextPage">
-                <button class="btn btn-primary" (click)="setPageToLoad(nextPage)">Next</button>
-              </div>
-              <div *ngIf="previousPage">
-                <button class="btn btn-primary" (click)="setPageToLoad(previousPage)">Previous</button>
-              </div>
-        </div>
-    </div>
+        </div>-->
+
+        <p>Showing <b>{{processedCampaignList.length}}</b> QR Codes</p>
+        <div *ngIf="nextPage">
+            <button class="btn btn-primary" (click)="setPageToLoad(nextPage)">Next</button>
+          </div>
+          <div *ngIf="previousPage">
+            <button class="btn btn-primary" (click)="setPageToLoad(previousPage)">Previous</button>
+          </div>
 </div>
 
 <ng-template #elseBlock>
