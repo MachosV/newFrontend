@@ -19,6 +19,7 @@ export class NewUserComponent {
   public passwordHasCapitalChar = false
   public passwordHasSpecialChar = false
   public okToShowSubmitButton = false
+  public username = ""
 
 
   constructor(
@@ -41,7 +42,8 @@ export class NewUserComponent {
     var params = {
       "invitationId": this.invitationID,
       "newPassword": this.newPassword,
-      "newPasswordConfirm": this.newPasswordConfirm
+      "newPasswordConfirm": this.newPasswordConfirm,
+      "username": this.username
     }
 
     this.http.post<any>(this.configService.getNewUserURL(),params).subscribe(data =>{
@@ -85,13 +87,16 @@ export class NewUserComponent {
     }
 
     //if all requirements are met, show submit button
-    if(this.passwordHasCapitalChar && this.passwordHasSpecialChar && this.passwordLengthOK && this.passwordMatchOK){
+    if(this.passwordHasCapitalChar && this.passwordHasSpecialChar && this.passwordLengthOK && this.passwordMatchOK && this.isEmail(this.username)){
       this.okToShowSubmitButton = true
     }else{
       this.okToShowSubmitButton = false
     }
+    
+  }
 
-
+  isEmail(str:string){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
   }
 
   hasCapitalCharacter(str:string) {

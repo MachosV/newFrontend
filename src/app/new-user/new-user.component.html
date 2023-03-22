@@ -4,6 +4,10 @@
         <form class="mt-3">
             <h5>Set your new password</h5>
             <div class="mb-3">
+              <input [(ngModel)]="username" email="true" (input)="passwordFieldChanged($event)" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="username" placeholder="Email address">
+              <div class="form-text">Your email address</div>
+            </div>
+            <div class="mb-3">
               <input [(ngModel)]="newPassword" (input)="passwordFieldChanged($event)" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="newPassword" placeholder="New password">
               <div class="form-text">Your new password</div>
             </div>
