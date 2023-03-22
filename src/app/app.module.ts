@@ -31,6 +31,8 @@ import { QreditorComponent } from './qr/qreditor/qreditor.component';
 import { QrPreviewComponent } from './qr/qr-preview/qr-preview.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NewUserComponent } from './new-user/new-user.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordFormComponent } from './reset-password-form/reset-password-form.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { NewUserComponent } from './new-user/new-user.component';
     QrPreviewComponent,
     SettingsComponent,
     NewUserComponent,
+    ResetPasswordComponent,
+    ResetPasswordFormComponent,
   ],
   imports: [
     ColorPickerModule,

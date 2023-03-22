@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfigurationService } from '../appConfiguration/config';
 import { MessagingService } from '../messages/messaging.service';
 
 @Injectable({
@@ -18,6 +19,7 @@ export class GatekeeperService {
     private http: HttpClient,
     private router: Router,
     private messageService: MessagingService,
+    private configurationService: ConfigurationService,
   ) { }
 
 
@@ -27,7 +29,7 @@ export class GatekeeperService {
       .set('username', username)
       .set('password',password);
     //console.log("posting login data")
-    this.http.post<any>(this.loginURL,params)
+    this.http.post<any>(this.configurationService.getLoginURL(),params)
 
     .subscribe(
       data => {

@@ -13,8 +13,8 @@ export class APIInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if(!req.url.startsWith("data")){
-      return next.handle(req.clone({ url: this.configService.getBaseURL()+req.url }))
+      return next.handle(req);
     }
-    return next.handle(req);
+    return next.handle(req.clone({ url: this.configService.getBaseURL()+req.url }))
   }
 }

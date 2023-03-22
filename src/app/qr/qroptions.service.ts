@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
+import { ConfigurationService } from '../appConfiguration/config';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,10 @@ export class QroptionsService {
 
   optionsChanged = new EventEmitter<any>();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private configurationService: ConfigurationService
+    ) { }
 
   setQrObject(qrObject: any){
     this.qrObject = qrObject
@@ -66,7 +70,7 @@ export class QroptionsService {
       gtag:this.qrObject.qrAnalytics,
       options: btoa(JSON.stringify(this.qrObject.options))
     }
-    return this.http.post<any>("api/campaign/create", data)
+    return this.http.post<any>(this.configurationService.getCreateCampaignURL(), data)
   }
 
 }

@@ -5,16 +5,20 @@ import { Injectable } from '@angular/core';
 })
 export class ConfigurationService {
 
-    private baseURL = "http://68.183.6.57/"
+    //private baseURL = "http://68.183.6.57/"
     //private baseURL = "http://qrexp.io/"
+    //private baseURL = "http://qrexp.io:8000/"
+    private baseURL = "http://localhost:8000/"
 
-    private loginURL = this.baseURL+""
+    private loginURL = this.baseURL+"api/auth"
     private redirectionServiceURL = this.baseURL+""
-    private changePasswordURL = "api/auth/changePassword"
-    private campaignURL = "api/campaign"
-    private createCampaignURL = this.campaignURL+"create"
+    private changePasswordURL = this.baseURL+"api/auth/changePassword"
+    private campaignURL = this.baseURL+"api/campaign"
+    private createCampaignURL = this.campaignURL+"/create"
     private redirectionURL = this.baseURL+"rservice/"
     private newUserURL = this.baseURL+"newUser/"
+    private resetPasswordURL = this.baseURL+"api/auth/resetPassword"
+    private requestResetPasswordIdURL = this.baseURL+"api/auth/requestResetPasswordId"
 
 
     getBaseURL():string{
@@ -47,6 +51,14 @@ export class ConfigurationService {
 
     getRedirectionURL():string{
         return this.redirectionURL
+    }
+
+    getResetPasswordURL():string {
+        return this.resetPasswordURL
+    }
+
+    getRequestResetPasswordURL():string{
+        return this.requestResetPasswordIdURL
     }
 
   constructor() { }
